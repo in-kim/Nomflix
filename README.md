@@ -11,8 +11,11 @@ react와 ES6 사용해서 Movie Discoveery App 구축.
 
 ## API Verbs
 
-- [ ] Now playing (Movie)
-- [ ] Top Rated (TV, Movie)
-- [ ] Popular (TV, Movie)
-- [ ] Upcoming (Movie)
-- [ ] Airing Today (TV)
+- [x] Now playing (Movie)
+- [x] Top Rated (TV)
+- [x] Popular (TV, Movie)
+- [x] Upcoming (Movie)
+- [x] Airing Today (TV)
+- [x] TV Show Detail
+- [x] Movie Detail
+- [x] Search (Movies, TV)
