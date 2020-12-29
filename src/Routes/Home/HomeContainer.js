@@ -14,7 +14,14 @@ export default class extends React.Component{
 
   async componentDidMount(){
     try{
-      moviesApi.nowPlaying();
+      const {data:{results:nowPlaying}} = await moviesApi.nowPlaying();
+      const {data:{results:upcoming}} = await moviesApi.upcoming();
+      const {data:{results:popular}} = await moviesApi.popular();
+      this.setState({
+        nowPlaying,
+        upcoming,
+        popular
+      })
     }catch{
       this.setState({
         error: "Can't find movies information."
@@ -31,10 +38,11 @@ export default class extends React.Component{
 
   // 객체 비구조화 할당
   render(){
-    const { NowPlaying, upcoming, popular, error, loading } = this.state;
+    const { nowPlaying, upcoming, popular, error, loading } = this.state;
+    console.log(this.state);
     return(
       <HomePresenter 
-        nowPlaying={NowPlaying}
+        nowPlaying={nowPlaying}
         upcoming={upcoming}
         popular={popular}
         error={error}
