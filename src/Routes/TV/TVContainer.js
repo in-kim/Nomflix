@@ -20,12 +20,13 @@ export default class extends React.Component {
       this.setState({
         topRated,
         popular,
-        airingToday
-      })
+        airingToday,
+      });
+
     }catch{
       this.setState({error: "Can't find TV information."})
     }finally{
-      this.setState({ erorr: false});
+      this.setState({ loading: false});
     }
   }
   // 객체 비구조화 할당
