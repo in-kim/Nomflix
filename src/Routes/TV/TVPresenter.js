@@ -8,6 +8,7 @@ import Poster from 'Components/Poster';
 
 const Container = styled.div`
     padding: 0px 10px;
+    padding-top:20px;
 `;
 
 const TVPresenter = ({topRated, popular, airingToday, error, loading}) => 
