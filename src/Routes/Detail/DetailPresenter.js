@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import Helmet from 'react-helmet';
 import Loader from "Components/Loader";
+import Message from "Components/Message";
 
 const Container = styled.div`
     width:100%;
@@ -41,18 +43,75 @@ const Cover = styled.div`
     border-radius:5px;
 `;
 
+const Data = styled.div`
+    width:70%;
+    margin-left:10px;
+`;
+const Title = styled.h3`
+    font-size:32px;
+    margin-bottom:10px;
+`;
+
+const ItemContaienr = styled.div`
+    margin:20px 0;
+`;
+
+const Item = styled.span``;
+
+const Divider = styled.span`
+    margin:0 10px;
+`;
+
+const Overview = styled.p`
+    font-size:12px;
+    opacity:0.7;
+    line-height:1.5;
+    width:50%;
+`;
+
+
+
 const DetailPresenter = ({result, error, loading}) => (
-    loading ? <Loader /> :(
-        <Container>
-            <Backdrop bgImage={`https://image.tmdb.org/t/p/original/${result.backdrop_path}`}></Backdrop>
-            <Content>
-                <Cover bgImage={result.poster_path ? 
-                    `https://image.tmdb.org/t/p/original/${result.poster_path}` :
-                    '/noPosterSmall.png'
-                }/>
-            </Content>
-        </Container>
-    )
+    loading ? (
+            <>
+                <Helmet>
+                    <title>Loding | Nomflix</title>
+                </Helmet>
+                <Loader />
+            </>
+        ) :(
+            error ? <Container>
+                <Message color="#e74c3c" text="Not found"/>
+            </Container> :
+            <Container>
+                <Helmet>
+                    <title>{result.original_title ? result.original_title : result.original_name} | Nomflix</title>
+                </Helmet>
+                <Backdrop bgImage={`https://image.tmdb.org/t/p/original/${result.backdrop_path}`}></Backdrop>
+                <Content>
+                    <Cover bgImage={result.poster_path ? 
+                        `https://image.tmdb.org/t/p/original/${result.poster_path}` :
+                        '/noPosterSmall.png'
+                    }/>
+                    <Data>
+                        <Title>{result.original_title ? result.original_title : result.original_name}</Title>
+                        <ItemContaienr>
+                            <Item>{result.release_date ? result.release_date.substring(0,4) : result.first_air_date.substring(0,4)}</Item>
+                            <Divider>•</Divider>
+                            <Item>{result.runtime ? result.runtime : result.episode_run_time} min</Item>
+                            <Divider>•</Divider>
+                            <Item>{result.genres && 
+                                result.genres.map((genre, index) => 
+                                    index === result.genres.length -1 ? 
+                                        genre.name : `${genre.name} / `
+                                )}
+                            </Item>
+                        </ItemContaienr>
+                        <Overview>{result.overview}</Overview>
+                    </Data>
+                </Content>
+            </Container>
+        )
 );
 
 DetailPresenter.propTypes = {
