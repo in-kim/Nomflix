@@ -10,7 +10,8 @@ export default class extends React.Component {
             result: null,
             error: null,
             loading: true,
-            isMovie: pathname.includes("/movie")
+            isMovie: pathname.includes("/movie"),
+            collection : null,
         };
     }
 
@@ -21,7 +22,7 @@ export default class extends React.Component {
             history: {push},
         } = this.props;
 
-        const{ isMovie} = this.state;
+        const{ isMovie } = this.state;
 
         
         const parsedId = parseInt(id);
@@ -31,20 +32,24 @@ export default class extends React.Component {
         }
 
         let result=null;
+        let collection=null;
         // movie, show 체크
         try{
             if(isMovie){
                 ({data:result} = await moviesApi.movieDetail(parsedId));
+                
+                const {belongs_to_collection:{id}} = result;
+                ({data:collection} = await moviesApi.collection(id));
             }else{
                 ({data:result} = await TVApi.showDetail(parsedId));
             }
-            console.log(result);
         }catch{
             this.setState({error:"Can't find anything."})
         }finally{
             this.setState({
                 loading:false,
-                result
+                result,
+                collection
             })
         }
 
@@ -52,13 +57,14 @@ export default class extends React.Component {
     }
     // 객체 비구조화 할당
     render() {
-        const {result, error, loading} = this.state;
+        const {result, collection, error, loading} = this.state;
         console.log(this.state);
         return (
             <DetailPresenter 
                 result={result} 
                 error={error} 
                 loading={loading}
+                collection={collection}
             />
         )
     }
