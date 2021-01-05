@@ -52,7 +52,7 @@ const Title = styled.h3`
     margin-bottom:10px;
 `;
 
-const ItemContaienr = styled.div`
+const ItemContainer = styled.div`
     margin:20px 0;
 `;
 
@@ -67,11 +67,64 @@ const Overview = styled.p`
     opacity:0.7;
     line-height:1.5;
     width:50%;
+    margin-bottom:20px;
 `;
 
+const TabContainer = styled.div`
+    display:flex;
+    width:50%;
+    align-items:center;
+    margin-bottom:50px;
+`;
 
+const TabItem = styled.span`
+    font-size:12px;
+    flex:1;
+    color:#fff;
+    text-align:center;
+`;
 
-const DetailPresenter = ({result, error, loading}) => (
+const CollectionContainer = styled.div`
+    display:flex;
+    width:100%;
+    flex-wrap:nowrap;
+    overflow:auto;
+    margin-top:20px;
+`;
+
+const CollectionItem = styled.div`
+    flex:0 0 20%;
+    /* min-width:120px; */
+    height:100%;
+    margin-right:20px;
+`;
+
+const CollectionThumn = styled.span`
+    display:block;
+    width:100%;
+    height:400px;
+    background-image:url(${props => props.bgImage});
+    background-size:cover;
+    background-position:center center;
+    border-radius:5px;
+    margin-bottom:10px;
+`;
+
+const CollectionName = styled.span`
+    display:block;
+    font-size:12px;
+    margin-bottom:10px;
+`;
+const CollectionOverview = styled.span`
+    display:block;
+    height:140px;
+    line-height:25px;
+    font-size:10px;
+    color:#fff;
+    overflow:auto;
+`;
+
+const DetailPresenter = ({result,collection, error, loading}) => (
     loading ? (
             <>
                 <Helmet>
@@ -95,7 +148,7 @@ const DetailPresenter = ({result, error, loading}) => (
                     }/>
                     <Data>
                         <Title>{result.original_title ? result.original_title : result.original_name}</Title>
-                        <ItemContaienr>
+                        <ItemContainer>
                             <Item>{result.release_date ? result.release_date.substring(0,4) : result.first_air_date.substring(0,4)}</Item>
                             <Divider>•</Divider>
                             <Item>{result.runtime ? result.runtime : result.episode_run_time} min</Item>
@@ -106,8 +159,41 @@ const DetailPresenter = ({result, error, loading}) => (
                                         genre.name : `${genre.name} / `
                                 )}
                             </Item>
-                        </ItemContaienr>
+                            <Divider>•</Divider>
+                            <Item>
+                                {
+                                    result.imdb_id && 
+                                    <a href={`https://www.imdb.com/title/${result.imdb_id}`} target="_blank">IMDB</a>
+                                }
+                            </Item>
+                        </ItemContainer>
                         <Overview>{result.overview}</Overview>
+
+                        <TabContainer>
+                            <TabItem>You Tube Videos</TabItem>
+                            <TabItem>Production Compoany</TabItem>
+                            <TabItem>Countries</TabItem>
+                        </TabContainer>
+
+                        <Title>{collection.name}</Title>
+                        <CollectionContainer>
+                            {
+                                collection.parts.map(part =>
+                                    <CollectionItem key={part.id}>
+                                        <CollectionThumn bgImage={part.poster_path ? 
+                                            `https://image.tmdb.org/t/p/original/${part.poster_path}` :
+                                            '/noPosterSmall.png'} 
+                                        />
+                                        <CollectionName>
+                                            {part.original_title}
+                                        </CollectionName>
+                                        <CollectionOverview>
+                                            {part.overview}
+                                        </CollectionOverview>
+                                    </CollectionItem>
+                                )   
+                            }
+                        </CollectionContainer>
                     </Data>
                 </Content>
             </Container>
