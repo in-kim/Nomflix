@@ -19,3 +19,13 @@ react와 ES6 사용해서 Movie Discoveery App 구축.
 - [x] TV Show Detail
 - [x] Movie Detail
 - [x] Search (Movies, TV)
+
+## Code Challenges
+
+- [x] IMDB Link
+- [ ] Tabs inside of Movie / show Details ( YT Videos, Production Company &
+      Countries)
+- [ ] Collections Link
+- [ ] Collections Route
+
+- [ ] On TV Show, show seasons and creators
