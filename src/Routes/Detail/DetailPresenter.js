@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from 'react-helmet';
@@ -56,7 +56,18 @@ const ItemContainer = styled.div`
     margin:20px 0;
 `;
 
-const Item = styled.span``;
+const Item = styled.span`
+`;
+
+const IMDB = styled.span`
+    font-weight:700;
+    color:#e67e22;
+    background-color:#000;
+    border:1px solid #e67e22;
+    border-radius:4px;
+    padding:3px;
+`;
+
 
 const Divider = styled.span`
     margin:0 10px;
@@ -78,10 +89,15 @@ const TabContainer = styled.div`
 `;
 
 const TabItem = styled.span`
-    font-size:12px;
+    font-size:14px;
+    font-weight:700;
     flex:1;
     color:#fff;
     text-align:center;
+    padding-bottom:8px;
+    cursor:pointer;
+    border-bottom:5px solid ${props => props.current ? "#8e44ad" : "transparent"};
+    transition:border-bottom .5s ease-in-out;
 `;
 
 const CollectionContainer = styled.div`
@@ -124,7 +140,9 @@ const CollectionOverview = styled.span`
     overflow:auto;
 `;
 
-const DetailPresenter = ({result,collection, error, loading}) => (
+// 탭 index
+
+const DetailPresenter = ({result,collection, error, loading, activeTab,arrTabName, clickHandler}) => (
     loading ? (
             <>
                 <Helmet>
@@ -159,21 +177,44 @@ const DetailPresenter = ({result,collection, error, loading}) => (
                                         genre.name : `${genre.name} / `
                                 )}
                             </Item>
-                            <Divider>•</Divider>
-                            <Item>
-                                {
-                                    result.imdb_id && 
-                                    <a href={`https://www.imdb.com/title/${result.imdb_id}`} target="_blank">IMDB</a>
-                                }
-                            </Item>
+                            {
+                                result.imdb_id && (
+                                    <>
+                                        <Divider>•</Divider>
+                                        <IMDB>
+                                            {
+                                                result.imdb_id && 
+                                                <a href={`https://www.imdb.com/title/${result.imdb_id}`} target="_blank">IMDB</a>
+                                            }
+                                        </IMDB>
+                                    </>
+                                )
+                            }
+                            
                         </ItemContainer>
                         <Overview>{result.overview}</Overview>
 
                         <TabContainer>
-                            <TabItem>You Tube Videos</TabItem>
-                            <TabItem>Production Compoany</TabItem>
-                            <TabItem>Countries</TabItem>
+                            {
+                                arrTabName.map((name,idx) => {
+                                    return <TabItem 
+                                                key={idx} 
+                                                onClick={() => clickHandler(idx)}
+                                                current={idx === activeTab}
+                                            >{name}</TabItem>
+                                })
+                            }
                         </TabContainer>
+                        {
+                          activeTab == 0 && 'first'
+                        }
+                        {
+                          activeTab == 1 && 'seconds'
+                        }
+                        {
+                          activeTab == 2 && 'third'
+                        }
+
                         {   collection &&
                             <>
                                 <Title>{collection.name}</Title>
@@ -207,6 +248,9 @@ DetailPresenter.propTypes = {
     result: PropTypes.object,
     error: PropTypes.string,
     loading: PropTypes.bool.isRequired,
+    activeTab:PropTypes.number.isRequired,
+    arrTabName:PropTypes.array, 
+    clickHandler:PropTypes.func,
 }
 
 export default DetailPresenter;

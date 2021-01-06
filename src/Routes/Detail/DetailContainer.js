@@ -2,6 +2,7 @@ import { moviesApi, TVApi } from "api";
 import React from "react";
 import DetailPresenter from "./DetailPresenter";
 
+
 export default class extends React.Component {
     constructor(props){
         super(props);
@@ -12,9 +13,21 @@ export default class extends React.Component {
             loading: true,
             isMovie: pathname.includes("/movie"),
             collection : null,
+            activeTab : 0,
+            arrTabName : [
+                'YouTube Videos',
+                'Production Compoany',
+                'Countries'
+            ]
         };
     }
 
+    clickHandler = (id) => {
+        this.setState({
+            activeTab : id
+        })
+    }
+    
     async componentDidMount(){
         const {
             match: 
@@ -60,7 +73,7 @@ export default class extends React.Component {
     }
     // 객체 비구조화 할당
     render() {
-        const {result, collection, error, loading} = this.state;
+        const {result, collection, activeTab, arrTabName, error, loading} = this.state;
         console.log(this.state);
         return (
             <DetailPresenter 
@@ -68,6 +81,9 @@ export default class extends React.Component {
                 error={error} 
                 loading={loading}
                 collection={collection}
+                activeTab={activeTab}
+                arrTabName={arrTabName}
+                clickHandler={this.clickHandler}
             />
         )
     }
