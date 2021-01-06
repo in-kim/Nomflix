@@ -38,8 +38,11 @@ export default class extends React.Component {
             if(isMovie){
                 ({data:result} = await moviesApi.movieDetail(parsedId));
                 
-                const {belongs_to_collection:{id}} = result;
-                ({data:collection} = await moviesApi.collection(id));
+                if(result.belongs_to_collection != null){
+                    const {belongs_to_collection:{id}} = result;
+                    ({data:collection} = await moviesApi.collection(id));
+                    console.log(collection);
+                }
             }else{
                 ({data:result} = await TVApi.showDetail(parsedId));
             }

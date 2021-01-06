@@ -174,26 +174,29 @@ const DetailPresenter = ({result,collection, error, loading}) => (
                             <TabItem>Production Compoany</TabItem>
                             <TabItem>Countries</TabItem>
                         </TabContainer>
-
-                        <Title>{collection.name}</Title>
-                        <CollectionContainer>
-                            {
-                                collection.parts.map(part =>
-                                    <CollectionItem key={part.id}>
-                                        <CollectionThumn bgImage={part.poster_path ? 
-                                            `https://image.tmdb.org/t/p/original/${part.poster_path}` :
-                                            '/noPosterSmall.png'} 
-                                        />
-                                        <CollectionName>
-                                            {part.original_title}
-                                        </CollectionName>
-                                        <CollectionOverview>
-                                            {part.overview}
-                                        </CollectionOverview>
-                                    </CollectionItem>
-                                )   
-                            }
-                        </CollectionContainer>
+                        {   collection &&
+                            <>
+                                <Title>{collection.name}</Title>
+                                <CollectionContainer>
+                                    {
+                                        collection.parts.map(part =>
+                                            <CollectionItem key={part.id}>
+                                                <CollectionThumn bgImage={part.poster_path ? 
+                                                    `https://image.tmdb.org/t/p/original/${part.poster_path}` :
+                                                    '/noPosterSmall.png'} 
+                                                />
+                                                <CollectionName>
+                                                    {part.original_title}
+                                                </CollectionName>
+                                                <CollectionOverview>
+                                                    {part.overview}
+                                                </CollectionOverview>
+                                            </CollectionItem>
+                                        )   
+                                    }
+                                </CollectionContainer>
+                            </>
+                        }
                     </Data>
                 </Content>
             </Container>
