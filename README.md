@@ -4,10 +4,10 @@ react와 ES6 사용해서 Movie Discoveery App 구축.
 
 ## Screens
 
-- [ ] Home
-- [ ] TV Shows
-- [ ] Search
-- [ ] Detail
+- [x] Home
+- [x] TV Shows
+- [x] Search
+- [x] Detail
 
 ## API Verbs
 
@@ -23,9 +23,9 @@ react와 ES6 사용해서 Movie Discoveery App 구축.
 ## Code Challenges
 
 - [x] IMDB Link
-- [ ] Tabs inside of Movie / show Details ( YT Videos, Production Company &
+- [x] Tab
+- [ ] Tabs inside of Movie / show Details ( YouTube Videos, Production Company &
       Countries)
 - [ ] Collections Link
 - [ ] Collections Route
-
 - [ ] On TV Show, show seasons and creators
