@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from 'react-helmet';
 import Loader from "Components/Loader";
 import Message from "Components/Message";
+import Collection from "./collection";
 
 const Container = styled.div`
     width:100%;
@@ -32,6 +33,7 @@ const Content = styled.div`
     height:100%;
     position:relative;
     z-index:1;
+    margin-bottom:50px;
 `;
 
 const Cover = styled.div`
@@ -101,43 +103,7 @@ const TabItem = styled.span`
 `;
 
 const CollectionContainer = styled.div`
-    display:flex;
-    width:100%;
-    flex-wrap:nowrap;
-    overflow:auto;
-    margin-top:20px;
-`;
-
-const CollectionItem = styled.div`
-    flex:0 0 20%;
-    /* min-width:120px; */
-    height:100%;
-    margin-right:20px;
-`;
-
-const CollectionThumn = styled.span`
-    display:block;
-    width:100%;
-    height:400px;
-    background-image:url(${props => props.bgImage});
-    background-size:cover;
-    background-position:center center;
-    border-radius:5px;
-    margin-bottom:10px;
-`;
-
-const CollectionName = styled.span`
-    display:block;
-    font-size:12px;
-    margin-bottom:10px;
-`;
-const CollectionOverview = styled.span`
-    display:block;
-    height:140px;
-    line-height:25px;
-    font-size:10px;
-    color:#fff;
-    overflow:auto;
+    padding:50px;
 `;
 
 // 탭 index
@@ -206,40 +172,35 @@ const DetailPresenter = ({result,collection, error, loading, activeTab,arrTabNam
                             }
                         </TabContainer>
                         {
-                          activeTab == 0 && 'first'
+                                activeTab == 0 && 'video'
                         }
                         {
-                          activeTab == 1 && 'seconds'
+                          activeTab == 1 && 
+                            (
+                                <ItemContainer>
+                                    {
+                                        result.production_companies.map((company) =>
+                                            <Item key={company.id}>
+                                                {company.name}
+                                                {company.origin_country}
+                                                {company.logo_path}
+                                            </Item>
+                                        )
+                                    }
+                                </ItemContainer>
+                            )
                         }
                         {
                           activeTab == 2 && 'third'
                         }
-
-                        {   collection &&
-                            <>
-                                <Title>{collection.name}</Title>
-                                <CollectionContainer>
-                                    {
-                                        collection.parts.map(part =>
-                                            <CollectionItem key={part.id}>
-                                                <CollectionThumn bgImage={part.poster_path ? 
-                                                    `https://image.tmdb.org/t/p/original/${part.poster_path}` :
-                                                    '/noPosterSmall.png'} 
-                                                />
-                                                <CollectionName>
-                                                    {part.original_title}
-                                                </CollectionName>
-                                                <CollectionOverview>
-                                                    {part.overview}
-                                                </CollectionOverview>
-                                            </CollectionItem>
-                                        )   
-                                    }
-                                </CollectionContainer>
-                            </>
-                        }
                     </Data>
                 </Content>
+                    {collection && Object.keys(collection).length > 0 && (
+                    <Collection
+                        name={collection.name}
+                        parts={collection.parts}
+                    />
+                )}
             </Container>
         )
 );
