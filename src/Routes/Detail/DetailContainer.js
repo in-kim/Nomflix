@@ -18,7 +18,7 @@ export default class extends React.Component {
                 'YouTube Videos',
                 'Production Compoany',
                 'Countries'
-            ]
+            ],
         };
     }
 
@@ -51,11 +51,13 @@ export default class extends React.Component {
             if(isMovie){
                 ({data:result} = await moviesApi.movieDetail(parsedId));
                 
+                // collection
                 if(result.belongs_to_collection != null){
                     const {belongs_to_collection:{id}} = result;
                     ({data:collection} = await moviesApi.collection(id));
                     console.log(collection);
                 }
+                
             }else{
                 ({data:result} = await TVApi.showDetail(parsedId));
             }
