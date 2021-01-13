@@ -87,7 +87,7 @@ const TabContainer = styled.div`
     display:flex;
     width:50%;
     align-items:center;
-    margin-bottom:50px;
+    margin-bottom:10px;
 `;
 
 const TabItem = styled.span`
@@ -102,13 +102,76 @@ const TabItem = styled.span`
     transition:border-bottom .5s ease-in-out;
 `;
 
-const CollectionContainer = styled.div`
-    padding:50px;
+const VideoContainer = styled.div`
+    position:relative;
+    display:flex;
+    flex-wrap:nowrap;
+    width:100%;
+    padding:30px 0 50px 0;
+    overflow:auto;
+    &:after{
+        content:'';
+        position:absolute;
+        width:10%;
+        height:calc(100% - 80px);
+        top:30px;
+        right:0;
+        background:linear-gradient( to right, transparent, #000 );
+    }
 `;
 
-// 탭 index
+const VideoItem = styled.div`
+    flex:0 0 60%;
+    max-width:60%;
+    height:400px;
+    margin-right:20px;
+`;
 
-const DetailPresenter = ({result,collection, error, loading, activeTab,arrTabName, clickHandler}) => (
+const Video = styled.iframe`
+    width:100%;
+    height:100%;
+    margin-bottom:10px;
+`;
+
+const VideoName = styled.span`
+    font-size:12px;
+`;
+
+const CompoanyContainer = styled.div`
+    display:flex;
+    flex-wrap:wrap;
+    padding: 30px 0 50px 0;
+`;
+
+const Compoany = styled.div`
+    flex:0 0 24%;
+    background: rgba(255,255,255,0.1);
+    border-radius:5px;
+    margin-right:1%;
+    margin-bottom:30px;
+    padding:10px;
+    text-align:center;
+`;
+const CompoanyLogo = styled.span`
+    display:block;
+    width:100%;
+    height:150px;
+    background:url(${props => props.bgImage}) no-repeat center;
+    background-size:contain;
+    margin-bottom:10px;
+`;
+const CompoanyName = styled.span`
+    display:block;
+    margin-bottom:10px;
+`;
+const CompoanyContry = styled.span`
+    display:block;
+    
+`;
+
+
+// 탭 index
+const DetailPresenter = ({result, collection, error, loading, activeTab,arrTabName, clickHandler}) => (
     loading ? (
             <>
                 <Helmet>
@@ -172,26 +235,56 @@ const DetailPresenter = ({result,collection, error, loading, activeTab,arrTabNam
                             }
                         </TabContainer>
                         {
-                                activeTab == 0 && 'video'
+                                activeTab == 0 && (
+                                    <VideoContainer>
+                                        {
+                                            result.videos.results && result.videos.results.length > 0 ?
+                                            result.videos.results.map((result) => (
+                                                <VideoItem key={result.id}>
+                                                    <Video src={`https://www.youtube.com/embed/${result.key}`}/>
+                                                    <VideoName>{result.name}</VideoName>
+                                                </VideoItem>
+                                            ) 
+                                          ) : 'YouTube Video가 없습니다.'
+                                        }
+                                        
+                                    </VideoContainer>
+                                )
                         }
                         {
                           activeTab == 1 && 
                             (
-                                <ItemContainer>
+                                <CompoanyContainer>
                                     {
                                         result.production_companies.map((company) =>
-                                            <Item key={company.id}>
-                                                {company.name}
-                                                {company.origin_country}
-                                                {company.logo_path}
-                                            </Item>
+                                            (
+                                                <Compoany key={company.id}>
+                                                    <CompoanyLogo bgImage={
+                                                        company.logo_path ? `https://image.tmdb.org/t/p/original/${company.logo_path}`:
+                                                        '/noPosterSmall.png'
+                                                    }></CompoanyLogo>
+                                                    <CompoanyName>{company.origin_country}</CompoanyName>
+                                                    <CompoanyContry>{company.name}</CompoanyContry>
+                                                </Compoany>
+                                            )
                                         )
                                     }
-                                </ItemContainer>
+                                </CompoanyContainer>
                             )
                         }
                         {
-                          activeTab == 2 && 'third'
+                          activeTab == 2 && (
+                              <ItemContainer>
+                                  {
+                                      result.production_countries.map((countries) => (
+                                          <>
+                                            <Item>{countries.iso_3166_1}</Item>
+                                            <Item>{countries.name}</Item>
+                                          </>
+                                      ))
+                                  }
+                              </ItemContainer>
+                          )
                         }
                     </Data>
                 </Content>
