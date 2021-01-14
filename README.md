@@ -26,6 +26,6 @@ react와 ES6 사용해서 Movie Discoveery App 구축.
 - [x] Tab
 - [x] Tabs inside of Movie / show Details ( YouTube Videos, Production Company &
       Countries)
-- [ ] Collections Link
-- [ ] Collections Route
+- [x] Collections Link
+- [x] Collections Route
 - [ ] On TV Show, show seasons and creators

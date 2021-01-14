@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import Loader from "Components/Loader";
 import Message from "Components/Message";
-import Collection from "./collection";
 
 const Container = styled.div`
     width:100%;
@@ -166,7 +166,15 @@ const CompoanyName = styled.span`
 `;
 const CompoanyContry = styled.span`
     display:block;
-    
+`;
+
+const ViewCollection = styled.span`
+    font-weight:700;
+    color:#000;
+    background-color:#fff;
+    border:1px solid #000;
+    border-radius:4px;
+    padding:3px;
 `;
 
 
@@ -219,7 +227,16 @@ const DetailPresenter = ({result, collection, error, loading, activeTab,arrTabNa
                                     </>
                                 )
                             }
-                            
+                            {
+                                result.belongs_to_collection &&  (
+                                    <>
+                                        <Divider>•</Divider>
+                                        <ViewCollection>
+                                            <Link to={`/collection/${result.belongs_to_collection.id}`}>View Collection</Link>
+                                        </ViewCollection>
+                                    </>
+                                )
+                            }
                         </ItemContainer>
                         <Overview>{result.overview}</Overview>
 
@@ -276,11 +293,8 @@ const DetailPresenter = ({result, collection, error, loading, activeTab,arrTabNa
                           activeTab == 2 && (
                               <ItemContainer>
                                   {
-                                      result.production_countries.map((countries) => (
-                                          <>
-                                            <Item>{countries.iso_3166_1}</Item>
-                                            <Item>{countries.name}</Item>
-                                          </>
+                                      result.production_countries.map((countries, idx) => (
+                                            <Item key="idx">{countries.name}</Item>
                                       ))
                                   }
                               </ItemContainer>
@@ -288,12 +302,6 @@ const DetailPresenter = ({result, collection, error, loading, activeTab,arrTabNa
                         }
                     </Data>
                 </Content>
-                    {collection && Object.keys(collection).length > 0 && (
-                    <Collection
-                        name={collection.name}
-                        parts={collection.parts}
-                    />
-                )}
             </Container>
         )
 );

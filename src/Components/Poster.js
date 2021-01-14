@@ -44,7 +44,7 @@ const Title = styled.span`
   white-space:nowrap;
 `;
 
-const Year = styled.span`font-size:10px; color:rgba(255,255,255,0.5)`;
+const Year = styled.span`font-size:10px; color:rgba(255,255,255,0.5);`;
 
 const Poster = ({id, imageUrl, title, rating, year, isMovie = false}) => (
   <Link to={isMovie? `/movie/${id}` : `/show/${id}`}>
