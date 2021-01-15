@@ -28,4 +28,4 @@ react와 ES6 사용해서 Movie Discoveery App 구축.
       Countries)
 - [x] Collections Link
 - [x] Collections Route
-- [ ] On TV Show, show seasons and creators
+- [x] On TV Show, show seasons and creators
