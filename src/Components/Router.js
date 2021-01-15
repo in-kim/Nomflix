@@ -6,6 +6,7 @@ import Search from "Routes/Search"
 import Header from "Components/Header"
 import Detail from "Routes/Detail"
 import Collection from "Routes/Collection"
+import Season from 'Routes/Season'
 
 export default () => (
   <Router>
@@ -18,6 +19,7 @@ export default () => (
         <Route path="/movie/:id" component={Detail}/>
         <Route path="/show/:id" component={Detail}/>
         <Route path="/collection/:id" component={Collection}/>
+        <Route path="/season/:id/:season" component={Season}/>
         <Redirect from="*" to="/"/>
       </Switch>
     </>
