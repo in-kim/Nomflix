@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import Loader from "Components/Loader";
 import Message from "Components/Message";
+import Section from "Components/Section";
+import Poster from "Components/Poster";
 
 const Container = styled.div`
     width:100%;
@@ -59,6 +61,15 @@ const ItemContainer = styled.div`
 `;
 
 const Item = styled.span`
+`;
+
+const Image = styled.span`
+    display:block;
+    height:180px;
+    background-image:url(${props => props.bgImage});
+    background-size:cover;
+    background-position:center center;
+    border-radius:5px;
 `;
 
 const IMDB = styled.span`
@@ -168,7 +179,7 @@ const CompoanyContry = styled.span`
     display:block;
 `;
 
-const ViewCollection = styled.span`
+const LinkButton = styled.span`
     font-weight:700;
     color:#000;
     background-color:#fff;
@@ -204,7 +215,9 @@ const DetailPresenter = ({result, collection, error, loading, activeTab,arrTabNa
                     <Data>
                         <Title>{result.original_title ? result.original_title : result.original_name}</Title>
                         <ItemContainer>
-                            <Item>{result.release_date ? result.release_date.substring(0,4) : result.first_air_date.substring(0,4)}</Item>
+                            <Item>
+                                {result.release_date ? result.release_date.substring(0,4) : result.first_air_date.substring(0,4)}
+                            </Item>
                             <Divider>•</Divider>
                             <Item>{result.runtime ? result.runtime : result.episode_run_time} min</Item>
                             <Divider>•</Divider>
@@ -231,9 +244,9 @@ const DetailPresenter = ({result, collection, error, loading, activeTab,arrTabNa
                                 result.belongs_to_collection &&  (
                                     <>
                                         <Divider>•</Divider>
-                                        <ViewCollection>
+                                        <LinkButton>
                                             <Link to={`/collection/${result.belongs_to_collection.id}`}>View Collection</Link>
-                                        </ViewCollection>
+                                        </LinkButton>
                                     </>
                                 )
                             }
@@ -249,6 +262,11 @@ const DetailPresenter = ({result, collection, error, loading, activeTab,arrTabNa
                                                 current={idx === activeTab}
                                             >{name}</TabItem>
                                 })
+                            }
+                            {
+                                result.seasons && result.seasons.length > 0 && (
+                                    <TabItem onClick={() => clickHandler(3)} current={3 === activeTab}>Season</TabItem>
+                                )
                             }
                         </TabContainer>
                         {
@@ -294,11 +312,29 @@ const DetailPresenter = ({result, collection, error, loading, activeTab,arrTabNa
                               <ItemContainer>
                                   {
                                       result.production_countries.map((countries, idx) => (
-                                            <Item key="idx">{countries.name}</Item>
+                                            <Item key={idx}>{countries.name}</Item>
                                       ))
                                   }
                               </ItemContainer>
                           )
+                        }
+                        {
+                            activeTab == 3 && (
+                                result.seasons && result.seasons.length > 0 && (
+                                   <Section title={`${result.original_name} 시리즈`}>
+                                       {
+                                           result.seasons.map(season => (
+                                               <Link to={`/season/${result.id}/${season.season_number}`} key={season.id}>
+                                                   <Image bgImage={season.poster_path ? `https://image.tmdb.org/t/p/w300/${season.poster_path}`:"/noPosterSmall.png"}/>
+                                                   <Item>{season.name}</Item>
+                                                   <Divider/>
+                                                   <Item>{season.air_date && season.air_date.substring(0,4)}</Item>
+                                               </Link>
+                                           ))
+                                       }
+                                   </Section>
+                               )
+                            )
                         }
                     </Data>
                 </Content>

@@ -34,6 +34,7 @@ export const TVApi = {
       append_to_response:'videos'
     }
   }),
+  season: (id,season) => api.get(`tv/${id}/season/${season}`),
   search: term => api.get("search/tv",{
     params:{
       query: encodeURIComponent(term)

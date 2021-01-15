@@ -16,7 +16,7 @@ export default class extends React.Component {
             arrTabName : [
                 'YouTube Videos',
                 'Production Compoany',
-                'Countries'
+                'Countries',
             ],
         };
     }
@@ -44,7 +44,6 @@ export default class extends React.Component {
         }
 
         let result=null;
-        let collection=null;
         // movie, show 체크
         try{
             if(isMovie){
