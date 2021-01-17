@@ -2,6 +2,9 @@
 
 react와 ES6 사용해서 Movie Discoveery App 구축.
 
+# GitHub Url
+https://in-kim.github.io/Nomflix
+
 ## Screens
 
 - [x] Home
@@ -29,3 +32,9 @@ react와 ES6 사용해서 Movie Discoveery App 구축.
 - [x] Collections Link
 - [x] Collections Route
 - [x] On TV Show, show seasons and creators
+
+
+## Router Change 
+## (Github page에서 라우터 동작에러 해결)
+- [] brower router -> hash router
+
