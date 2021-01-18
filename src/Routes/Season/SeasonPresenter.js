@@ -81,7 +81,7 @@ const SeasonPresenter = ({result, error, loading}) => (
                 <ListContainer>
                   <List>
                     <ListImg bgImage={episode.still_path ? `https://image.tmdb.org/t/p/original/${episode.still_path}` : 
-                      '/noPosterSmall.png'}
+                      require("../../assets/logo.png").default}
                     />
                     <ListItem>{episode.name}</ListItem>
                     <ListItem>{episode.overview}</ListItem>

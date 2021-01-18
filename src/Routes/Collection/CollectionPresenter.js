@@ -159,7 +159,7 @@ const Collection = ({ result, error, loading }) => (
                         <Image 
                           bgUrl={part.poster_path ? 
                             `https://image.tmdb.org/t/p/w300/${part.poster_path}` : 
-                            "/noPosterSmall.png"
+                            require("../../assets/noPosterSmall.png").default
                           } 
                         />
                         <Name>{part.original_title ? part.original_title : part.title}</Name>

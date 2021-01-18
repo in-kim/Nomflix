@@ -210,7 +210,7 @@ const DetailPresenter = ({result, collection, error, loading, activeTab,arrTabNa
                 <Content>
                     <Cover bgImage={result.poster_path ? 
                         `https://image.tmdb.org/t/p/original/${result.poster_path}` :
-                        '/noPosterSmall.png'
+                        require("../../assets/logo.png").default
                     }/>
                     <Data>
                         <Title>{result.original_title ? result.original_title : result.original_name}</Title>
@@ -296,7 +296,7 @@ const DetailPresenter = ({result, collection, error, loading, activeTab,arrTabNa
                                                 <Compoany key={company.id}>
                                                     <CompoanyLogo bgImage={
                                                         company.logo_path ? `https://image.tmdb.org/t/p/original/${company.logo_path}`:
-                                                        '/noPosterSmall.png'
+                                                        require("../../assets/logo.png").default
                                                     }></CompoanyLogo>
                                                     <CompoanyName>{company.origin_country}</CompoanyName>
                                                     <CompoanyContry>{company.name}</CompoanyContry>
@@ -325,7 +325,7 @@ const DetailPresenter = ({result, collection, error, loading, activeTab,arrTabNa
                                        {
                                            result.seasons.map(season => (
                                                <Link to={`/season/${result.id}/${season.season_number}`} key={season.id}>
-                                                   <Image bgImage={season.poster_path ? `https://image.tmdb.org/t/p/w300/${season.poster_path}`:"/noPosterSmall.png"}/>
+                                                   <Image bgImage={season.poster_path ? `https://image.tmdb.org/t/p/w300/${season.poster_path}`:require("../../assets/logo.png").default}/>
                                                    <Item>{season.name}</Item>
                                                    <Divider/>
                                                    <Item>{season.air_date && season.air_date.substring(0,4)}</Item>

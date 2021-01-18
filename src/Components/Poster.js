@@ -53,7 +53,7 @@ const Poster = ({id, imageUrl, title, rating, year, isMovie = false}) => (
         <Image 
           bgUrl={imageUrl ? 
             `https://image.tmdb.org/t/p/w300/${imageUrl}` : 
-            "/noPosterSmall.png"
+            require("../assets/noPosterSmall.png").default
           } 
         />
         <Rating>
